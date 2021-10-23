@@ -1,15 +1,12 @@
 import React, { useRef, useMemo, useState } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native'
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import { ScrollView } from 'react-native-gesture-handler'
 import { WebView } from 'react-native-webview'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import MapView from 'react-native-maps'
-import { Fontisto, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons'
+import { Fontisto, MaterialCommunityIcons, FontAwesome5, Ionicons } from '@expo/vector-icons'
 
-import SearchMetro from '../Components/SearchMetro'
-import SearchTransport from '../Components/SearchTransport'
-import SearchParking from '../Components/SearchParking'
 import News from '../Components/News'
 import Weather from '../Components/Weather'
 
@@ -31,13 +28,6 @@ const services = [
         name: 'Схема метро'
     }
 ]
-
-const serviceContent = {
-    0: <SearchMetro />,
-    1: <SearchTransport />,
-    2: <SearchParking />,
-    3: null
-}
 
 const serviceIcon = {
     0: <Fontisto name='train' size={29} />,
@@ -74,7 +64,6 @@ const MainScreen = (props) => {
                             top: 35
                         }}
                         source={{ uri: 'https://yandex.ru/metro/moscow' }}
-                        originWhitelist={['https://yandex.ru/metro/*']}
                     />
                 </View> : null
             }
@@ -104,7 +93,6 @@ const MainScreen = (props) => {
                                         {
                                             serviceIcon[object.id]
                                         }
-                                        {/* <Image source={serviceImage[object.id]} resizeMode='contain' style={{ height: 50, width: 50 }} /> */}
                                         <Text style={{ textAlign: 'center', marginTop: 5 }}>{object.name}</Text>
                                     </TouchableOpacity>
                                 )
@@ -117,9 +105,10 @@ const MainScreen = (props) => {
                     >
                         <Text style={styles.buttonText}>Все сервисы</Text>
                     </TouchableOpacity>
-                    {
-                        serviceContent[selectService]
-                    }
+                    <TouchableOpacity style={styles.searchInput}>
+                        <Text style={{ flex: 1 }}>Найти общественный транспорт</Text>
+                        <Ionicons name='search-sharp' style={{ marginHorizontal: 15 }} size={25} />
+                    </TouchableOpacity>
                     <Weather />
                     <News />
                 </BottomSheetScrollView>
@@ -159,15 +148,6 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 15
     },
-    searchInput: {
-        height: 55,
-        backgroundColor: '#EFEFF4',
-        borderRadius: 10,
-        marginHorizontal: 20,
-        paddingLeft: 15,
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
     allServices: {
         marginHorizontal: 20,
         marginBottom: 15,
@@ -182,6 +162,16 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase',
         fontWeight: '600',
         fontSize: 14
+    },
+    searchInput: {
+        height: 55,
+        backgroundColor: '#EFEFF4',
+        borderRadius: 10,
+        paddingLeft: 15,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginHorizontal: 20,
+        marginBottom: 15
     }
 })
 
