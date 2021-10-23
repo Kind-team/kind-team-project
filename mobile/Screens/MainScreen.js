@@ -36,6 +36,12 @@ const serviceIcon = {
     3: <MaterialCommunityIcons name='map-marker-path' size={28} />,
 }
 
+const servicePlaceholder = {
+    0: 'Найти станцию метро',
+    1: 'Найти общественный транспорт',
+    2: 'Найти парковку'
+}
+
 const { height } = Dimensions.get('screen')
 
 const MainScreen = (props) => {
@@ -105,10 +111,12 @@ const MainScreen = (props) => {
                     >
                         <Text style={styles.buttonText}>Все сервисы</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.searchInput}>
-                        <Text style={{ flex: 1 }}>Найти общественный транспорт</Text>
-                        <Ionicons name='search-sharp' style={{ marginHorizontal: 15 }} size={25} />
-                    </TouchableOpacity>
+                    {
+                        selectService !== 3 ? <TouchableOpacity style={styles.searchInput}>
+                            <Text style={{ flex: 1 }}>{servicePlaceholder[selectService]}</Text>
+                            <Ionicons name='search-sharp' style={{ marginHorizontal: 15 }} size={25} />
+                        </TouchableOpacity> : null
+                    }
                     <Weather />
                     <News />
                 </BottomSheetScrollView>
