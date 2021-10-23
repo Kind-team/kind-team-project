@@ -42,13 +42,19 @@ const servicePlaceholder = {
     2: 'Найти парковку'
 }
 
+const serviceNavigate = {
+    0: 'SearchMetro',
+    1: 'SearchTransport',
+    2: 'SearchParking'
+}
+
 const { height } = Dimensions.get('screen')
 
 const MainScreen = (props) => {
     const bottomSheetRef = useRef(null)
     const [selectService, setSelectService] = useState(0)
 
-    const snapPoints = useMemo(() => ['38%', '90%'], [])
+    const snapPoints = useMemo(() => ['35%', '90%'], [])
 
     return (
         <SafeAreaView style={styles.container}>
@@ -66,7 +72,7 @@ const MainScreen = (props) => {
                     <WebView
                         style={{
                             flex: 1,
-                            marginBottom: ((38 * height) / 100) + 35,
+                            marginBottom: ((35 * height) / 100) + 35,
                             top: 35
                         }}
                         source={{ uri: 'https://yandex.ru/metro/moscow' }}
@@ -112,7 +118,7 @@ const MainScreen = (props) => {
                         <Text style={styles.buttonText}>Все сервисы</Text>
                     </TouchableOpacity>
                     {
-                        selectService !== 3 ? <TouchableOpacity style={styles.searchInput}>
+                        selectService !== 3 ? <TouchableOpacity onPress={() => props.navigation.navigate(serviceNavigate[selectService])} style={styles.searchInput}>
                             <Text style={{ flex: 1 }}>{servicePlaceholder[selectService]}</Text>
                             <Ionicons name='search-sharp' style={{ marginHorizontal: 15 }} size={25} />
                         </TouchableOpacity> : null
