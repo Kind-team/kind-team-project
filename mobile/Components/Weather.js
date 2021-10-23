@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     weather: {
         height: 200,
         width: width - 40,
-        borderRadius: 25,
+        borderRadius: 20,
         overflow: 'hidden',
         alignSelf: 'center'
     }
