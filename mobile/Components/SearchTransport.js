@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         marginHorizontal: 20,
-        marginBottom: 40
+        marginBottom: 20
     },
     searchInput: {
         height: 55,

@@ -1,11 +1,14 @@
 import React, { useRef, useMemo, useCallback, useState } from 'react'
 import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
-import BottomSheet, { useBottomSheetDynamicSnapPoints, BottomSheetView } from '@gorhom/bottom-sheet'
+import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import { ScrollView } from 'react-native-gesture-handler'
+import { WebView } from 'react-native-webview'
 import MapView from 'react-native-maps'
 import SearchMetro from '../Components/SearchMetro'
 import SearchTransport from '../Components/SearchTransport'
 import SearchParking from '../Components/SearchParking'
+import News from '../Components/News'
+
 
 
 const services = [
@@ -38,14 +41,7 @@ const MainScreen = () => {
     const bottomSheetRef = useRef(null)
     const [selectService, setSelectService] = useState(0)
 
-    const snapPoints = useMemo(() => ['CONTENT_HEIGHT', '90%'], [])
-
-    const {
-        animatedHandleHeight,
-        animatedSnapPoints,
-        animatedContentHeight,
-        handleContentLayout,
-    } = useBottomSheetDynamicSnapPoints(snapPoints)
+    const snapPoints = useMemo(() => ['34%', '95%'], [])
 
     return (
         <View style={styles.container}>
@@ -53,22 +49,30 @@ const MainScreen = () => {
                 initialRegion={{
                     latitude: 55.751244,
                     longitude: 37.618423,
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421,
+                    latitudeDelta: 0.0422,
+                    longitudeDelta: 0.0221,
                 }}
                 style={styles.map}
             />
+            {
+                selectService === 3 ? <View style={{ ...StyleSheet.absoluteFill, backgroundColor: '#fff' }}>
+                    <WebView
+                        style={{
+                            flex: 1,
+                            marginBottom: 320,
+                            top: 35
+                        }}
+                        source={{ uri: 'https://yandex.ru/metro/moscow' }}
+                        originWhitelist={['https://yandex.ru/metro/*']}
+                    />
+                </View> : null
+            }
             <BottomSheet
                 ref={bottomSheetRef}
                 index={0}
-                snapPoints={animatedSnapPoints}
-                handleHeight={animatedHandleHeight}
-                contentHeight={animatedContentHeight}
+                snapPoints={snapPoints}
             >
-                <BottomSheetView
-                    style={styles.contentContainer}
-                    onLayout={handleContentLayout}
-                >
+                <BottomSheetScrollView>
                     <Text style={styles.title}>Сервисы</Text>
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.cardScroll}>
                         {
@@ -92,10 +96,14 @@ const MainScreen = () => {
                             })
                         }
                     </ScrollView>
+                    <TouchableOpacity style={styles.allServices}>
+                        <Text style={styles.buttonText}>Все сервисы</Text>
+                    </TouchableOpacity>
                     {
                         serviceContent[selectService]
                     }
-                </BottomSheetView>
+                    <News />
+                </BottomSheetScrollView>
             </BottomSheet>
         </View>
     )
@@ -105,8 +113,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
     },
     contentContainer: {
         flex: 1,
@@ -114,6 +120,7 @@ const styles = StyleSheet.create({
     map: {
         width: '100%',
         height: '100%',
+        zIndex: 0
     },
     title: {
         fontSize: 19,
@@ -132,7 +139,7 @@ const styles = StyleSheet.create({
     cardScroll: {
         marginTop: 10,
         maxHeight: 70,
-        marginBottom: 20
+        marginBottom: 15
     },
     searchInput: {
         height: 55,
@@ -142,6 +149,21 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         flexDirection: 'row',
         alignItems: 'center'
+    },
+    allServices: {
+        marginHorizontal: 20,
+        marginBottom: 15,
+        height: 55,
+        backgroundColor: '#FF0000',
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    buttonText: {
+        color: '#fff',
+        textTransform: 'uppercase',
+        fontWeight: '600',
+        fontSize: 14
     }
 })
 
