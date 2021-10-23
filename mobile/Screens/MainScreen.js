@@ -1,16 +1,17 @@
-import React, { useRef, useMemo, useCallback, useState } from 'react'
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions } from 'react-native'
+import React, { useRef, useMemo, useState } from 'react'
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native'
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import { ScrollView } from 'react-native-gesture-handler'
 import { WebView } from 'react-native-webview'
+import { SafeAreaView } from 'react-native-safe-area-context'
 import MapView from 'react-native-maps'
+import { Fontisto, MaterialCommunityIcons, FontAwesome5 } from '@expo/vector-icons'
+
 import SearchMetro from '../Components/SearchMetro'
 import SearchTransport from '../Components/SearchTransport'
 import SearchParking from '../Components/SearchParking'
 import News from '../Components/News'
 import Weather from '../Components/Weather'
-
-
 
 const services = [
     {
@@ -38,16 +39,23 @@ const serviceContent = {
     3: null
 }
 
+const serviceIcon = {
+    0: <Fontisto name='train' size={29} />,
+    1: <Fontisto name='bus' size={25} />,
+    2: <FontAwesome5 name='parking' size={29} />,
+    3: <MaterialCommunityIcons name='map-marker-path' size={28} />,
+}
+
 const { height } = Dimensions.get('screen')
 
-const MainScreen = () => {
+const MainScreen = (props) => {
     const bottomSheetRef = useRef(null)
     const [selectService, setSelectService] = useState(0)
 
-    const snapPoints = useMemo(() => ['34%', '95%'], [])
+    const snapPoints = useMemo(() => ['38%', '90%'], [])
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             <MapView
                 initialRegion={{
                     latitude: 55.751244,
@@ -62,7 +70,7 @@ const MainScreen = () => {
                     <WebView
                         style={{
                             flex: 1,
-                            marginBottom: ((34 * height) / 100) + 35,
+                            marginBottom: ((38 * height) / 100) + 35,
                             top: 35
                         }}
                         source={{ uri: 'https://yandex.ru/metro/moscow' }}
@@ -88,18 +96,25 @@ const MainScreen = () => {
                                             styles.cardService,
                                             {
                                                 marginLeft: index === 0 ? 20 : 0,
-                                                borderColor: '#FF0000',
-                                                borderWidth: object.id === selectService ? 2.5 : 0
+                                                borderColor: object.id === selectService ? '#FF0000' : 'transparent',
+                                                borderWidth: 2
                                             }
                                         ]}
                                     >
-                                        <Text style={{ textAlign: 'center' }}>{object.name}</Text>
+                                        {
+                                            serviceIcon[object.id]
+                                        }
+                                        {/* <Image source={serviceImage[object.id]} resizeMode='contain' style={{ height: 50, width: 50 }} /> */}
+                                        <Text style={{ textAlign: 'center', marginTop: 5 }}>{object.name}</Text>
                                     </TouchableOpacity>
                                 )
                             })
                         }
                     </ScrollView>
-                    <TouchableOpacity style={styles.allServices}>
+                    <TouchableOpacity
+                        onPress={() => props.navigation.navigate('AllServices')}
+                        style={styles.allServices}
+                    >
                         <Text style={styles.buttonText}>Все сервисы</Text>
                     </TouchableOpacity>
                     {
@@ -109,7 +124,7 @@ const MainScreen = () => {
                     <News />
                 </BottomSheetScrollView>
             </BottomSheet>
-        </View>
+        </SafeAreaView>
     )
 }
 
@@ -132,17 +147,16 @@ const styles = StyleSheet.create({
         marginHorizontal: 20
     },
     cardService: {
-        height: 70,
         width: 140,
         backgroundColor: '#EFEFF4',
         borderRadius: 10,
         marginRight: 10,
-        justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        paddingVertical: 10,
     },
     cardScroll: {
         marginTop: 10,
-        maxHeight: 70,
         marginBottom: 15
     },
     searchInput: {
