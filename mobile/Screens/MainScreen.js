@@ -1,5 +1,5 @@
 import React, { useRef, useMemo, useCallback, useState } from 'react'
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Dimensions } from 'react-native'
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import { ScrollView } from 'react-native-gesture-handler'
 import { WebView } from 'react-native-webview'
@@ -8,6 +8,7 @@ import SearchMetro from '../Components/SearchMetro'
 import SearchTransport from '../Components/SearchTransport'
 import SearchParking from '../Components/SearchParking'
 import News from '../Components/News'
+import Weather from '../Components/Weather'
 
 
 
@@ -37,6 +38,8 @@ const serviceContent = {
     3: null
 }
 
+const { height } = Dimensions.get('screen')
+
 const MainScreen = () => {
     const bottomSheetRef = useRef(null)
     const [selectService, setSelectService] = useState(0)
@@ -59,7 +62,7 @@ const MainScreen = () => {
                     <WebView
                         style={{
                             flex: 1,
-                            marginBottom: 320,
+                            marginBottom: ((34 * height) / 100) + 35,
                             top: 35
                         }}
                         source={{ uri: 'https://yandex.ru/metro/moscow' }}
@@ -102,6 +105,7 @@ const MainScreen = () => {
                     {
                         serviceContent[selectService]
                     }
+                    <Weather />
                     <News />
                 </BottomSheetScrollView>
             </BottomSheet>
