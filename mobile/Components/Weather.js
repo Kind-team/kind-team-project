@@ -9,7 +9,7 @@ const Weather = () => {
         <View style={styles.container}>
             <Text style={styles.title}>Погода</Text>
             <TouchableOpacity onPress={() => Linking.openURL('https://www.gismeteo.ru/weather-moscow-4368/')}>
-                <Image style={styles.weather} resizeMode='contain' source={WeatherImage} />
+                <Image style={styles.weather} resizeMode='cover' source={WeatherImage} />
             </TouchableOpacity>
         </View>
     )
