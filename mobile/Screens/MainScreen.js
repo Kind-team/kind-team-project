@@ -188,7 +188,7 @@ const MainScreen = (props) => {
                                 // onPress={() => props.navigation.navigate('SearchMetro', { item, markers })}
                                 coordinate={item.coordinate}
                             >
-                                <Image source={TransportImg} style={{ height: 30, width: 30 }} />
+                                <Image source={TransportImg} style={{ height: 23, width: 23 }} />
                             </Marker>
                         )
                     } else if (item.type === 2) {
@@ -198,7 +198,7 @@ const MainScreen = (props) => {
                                 // onPress={() => props.navigation.navigate('SearchMetro', { item, markers })}
                                 coordinate={item.coordinate}
                             >
-                                <Image source={ParkingImg} style={{ height: 30, width: 30 }} />
+                                <Image source={ParkingImg} style={{ height: 23, width: 23 }} />
                             </Marker>
                         )
                     }
