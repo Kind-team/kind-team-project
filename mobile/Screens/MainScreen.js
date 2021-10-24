@@ -11,6 +11,9 @@ import News from '../Components/News'
 import Weather from '../Components/Weather'
 
 import MetroImg from '../assets/metro.png'
+import TransportImg from '../assets/transport.png'
+import ParkingImg from '../assets/parking.png'
+
 
 const services = [
     {
@@ -185,7 +188,7 @@ const MainScreen = (props) => {
                                 // onPress={() => props.navigation.navigate('SearchMetro', { item, markers })}
                                 coordinate={item.coordinate}
                             >
-                                {/* <Image source={MetroImg} style={{ height: 50, width: 50 }} /> */}
+                                <Image source={TransportImg} style={{ height: 30, width: 30 }} />
                             </Marker>
                         )
                     } else if (item.type === 2) {
@@ -195,7 +198,7 @@ const MainScreen = (props) => {
                                 // onPress={() => props.navigation.navigate('SearchMetro', { item, markers })}
                                 coordinate={item.coordinate}
                             >
-                                {/* <Image source={MetroImg} style={{ height: 50, width: 50 }} /> */}
+                                <Image source={ParkingImg} style={{ height: 30, width: 30 }} />
                             </Marker>
                         )
                     }

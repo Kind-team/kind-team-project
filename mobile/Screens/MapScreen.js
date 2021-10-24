@@ -3,8 +3,10 @@ import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'rea
 import MapView, { Marker } from 'react-native-maps'
 import * as Location from 'expo-location';
 import MapViewDirections from 'react-native-maps-directions'
+
 import Meimg from '../assets/me.png'
 import Metroimg from '../assets/metro.png'
+
 const MapScreen = ({ route }) => {
     const [myPosition, setMyPosition] = useState(null)
     const [errorMsg, setErrorMsg] = useState(null);
