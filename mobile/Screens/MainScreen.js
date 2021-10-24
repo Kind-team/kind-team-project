@@ -1,14 +1,17 @@
 import React, { useRef, useMemo, useState } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native'
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import { ScrollView } from 'react-native-gesture-handler'
 import { WebView } from 'react-native-webview'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import MapView from 'react-native-maps'
+import MapView, { Marker } from 'react-native-maps'
 import { Fontisto, MaterialCommunityIcons, FontAwesome5, Ionicons } from '@expo/vector-icons'
 
 import News from '../Components/News'
 import Weather from '../Components/Weather'
+
+import MetroImg from '../assets/metro.png'
+import { interpolateNode } from 'react-native-reanimated'
 
 const services = [
     {
@@ -27,6 +30,38 @@ const services = [
         id: 3,
         name: 'Схема метро'
     }
+]
+
+//market, type
+
+const markers = [
+    {
+        id: 'st37392265',
+        title: 'Лубянка',
+        type: 0,
+        coordinate: {
+            latitude: 55.759806,
+            longitude: 37.628000
+        },
+    },
+    {
+        id: 'st20386865',
+        title: 'Чеховская',
+        type: 0,
+        coordinate: {
+            latitude: 55.7647441,
+            longitude: 37.6082388
+        },
+    },
+    {
+        id: 'st23821145',
+        title: 'Александровский сад',
+        type: 0,
+        coordinate: {
+            latitude: 55.752416,
+            longitude: 37.608602
+        },
+    },
 ]
 
 const serviceIcon = {
@@ -66,7 +101,9 @@ const MainScreen = (props) => {
                     longitudeDelta: 0.0221,
                 }}
                 style={styles.map}
-            />
+            >
+                {markers?.filter((object) => object.type === selectService).map((item) => { return <TouchableOpacity key={item.id} activeOpacity={0.7} onPress={() => props.navigation.navigate('SearchMetro', { item, markers })} ><Marker coordinate={item.coordinate}><Image source={MetroImg} style={{ height: 50, width: 50 }} ></Image></Marker></TouchableOpacity> })}
+            </MapView>
             {
                 selectService === 3 ? <View style={{ ...StyleSheet.absoluteFill, backgroundColor: '#fff' }}>
                     <WebView
