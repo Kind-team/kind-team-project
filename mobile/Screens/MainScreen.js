@@ -1,11 +1,14 @@
-import React, { useRef, useMemo, useState } from 'react'
+import React, { useRef, useMemo, useState, useEffect } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native'
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet'
 import { ScrollView } from 'react-native-gesture-handler'
 import { WebView } from 'react-native-webview'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import MapView, { Marker } from 'react-native-maps'
+import * as Location from 'expo-location';
+import MapViewDirections from 'react-native-maps-directions'
 import { Fontisto, MaterialCommunityIcons, FontAwesome5, Ionicons } from '@expo/vector-icons'
+import { useRoute } from '@react-navigation/native'
 
 import News from '../Components/News'
 import Weather from '../Components/Weather'
@@ -88,8 +91,22 @@ const { height } = Dimensions.get('screen')
 const MainScreen = (props) => {
     const bottomSheetRef = useRef(null)
     const [selectService, setSelectService] = useState(0)
-
+    const [myPosition, setMyPosition] = useState(null)
+    const [errorMsg, setErrorMsg] = useState(null);
     const snapPoints = useMemo(() => ['35%', '90%'], [])
+
+    useEffect(() => {
+        (async () => {
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+                setErrorMsg('Permission to access location was denied');
+                return;
+            }
+
+            let location = await Location.getCurrentPositionAsync({});
+            setMyPosition(location);
+        })();
+    }, []);
 
     return (
         <SafeAreaView style={styles.container}>
@@ -102,7 +119,12 @@ const MainScreen = (props) => {
                 }}
                 style={styles.map}
             >
-                {markers?.filter((object) => object.type === selectService).map((item) => { return <TouchableOpacity key={item.id} activeOpacity={0.7} onPress={() => props.navigation.navigate('SearchMetro', { item, markers })} ><Marker coordinate={item.coordinate}><Image source={MetroImg} style={{ height: 50, width: 50 }} ></Image></Marker></TouchableOpacity> })}
+                {markers?.filter((object) => object.type === selectService).map((item) => {
+                    return <TouchableOpacity key={item.id} activeOpacity={0.7} onPress={() => props.navigation.navigate('SearchMetro', { item, markers })} >
+                        <Marker coordinate={item.coordinate}><Image source={MetroImg} style={{ height: 50, width: 50 }} ></Image></Marker>
+                    </TouchableOpacity>
+                })}
+                {myPosition ? <Marker coordinate={{ latitude: myPosition?.coords.latitude, longitude: myPosition?.coords.longitude }} /> : null}
             </MapView>
             {
                 selectService === 3 ? <View style={{ ...StyleSheet.absoluteFill, backgroundColor: '#fff' }}>
@@ -155,7 +177,7 @@ const MainScreen = (props) => {
                         <Text style={styles.buttonText}>Все сервисы</Text>
                     </TouchableOpacity>
                     {
-                        selectService !== 3 ? <TouchableOpacity onPress={() => props.navigation.navigate(serviceNavigate[selectService])} style={styles.searchInput}>
+                        selectService !== 3 ? <TouchableOpacity onPress={() => props.navigation.navigate(serviceNavigate[selectService], { markers: markers, item: markers })} style={styles.searchInput}>
                             <Text style={{ flex: 1 }}>{servicePlaceholder[selectService]}</Text>
                             <Ionicons name='search-sharp' style={{ marginHorizontal: 15 }} size={25} />
                         </TouchableOpacity> : null

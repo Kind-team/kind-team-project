@@ -8,6 +8,7 @@ import SearchMetroScreen from './Screens/SearchMetroScreen'
 import SearchTransportScreen from './Screens/SearchTransportScreen'
 import SearchParkingScreen from './Screens/SearchParkingScreen'
 import SchemaScreen from './Screens/SchemaScreen'
+import MapScreen from './Screens/MapScreen'
 
 const Stack = createNativeStackNavigator()
 
@@ -58,6 +59,14 @@ const Router = () => {
                         component={SchemaScreen}
                         options={{
                             headerShown: false
+                        }}
+                    />
+                    <Stack.Screen
+                        name='Map'
+                        component={MapScreen}
+                        options={{
+                            headerTitle:"В пути",
+                            headerShown: true
                         }}
                     />
                 </Stack.Navigator>

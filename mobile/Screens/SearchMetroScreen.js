@@ -23,13 +23,13 @@ const SearchMetroScreen = ({ route, navigation }) => {
         'Александровский сад-Лубянка': require('../assets/route/Alex-Lub.png'),
     }
 
-    const fromRoute = markers.find((obj) => obj.title == from)
-    const toRoute = markers.find((obj) => obj.title == to)
+    const fromRoute = markers?.find((obj) => obj?.title == from)
+    const toRoute = markers?.find((obj) => obj?.title == to)
 
     const routeimg = routes[`${fromRoute?.title}${toRoute ? `-${toRoute?.title}` : ''}`]
 
     useEffect(() => {
-        if (item) setFrom(item.title)
+        if (item) setFrom(item?.title)
     }, [])
 
     return (
@@ -52,13 +52,19 @@ const SearchMetroScreen = ({ route, navigation }) => {
                         >
                             <Text style={styles.buttonText}>Схема метро</Text>
                         </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate('Map', { from: fromRoute, to: toRoute })}
+                            style={styles.allServices}
+                        >
+                            <Text style={styles.buttonText}>В путь</Text>
+                        </TouchableOpacity>
                     </View> :
                     markers?.filter((object) => {
-                        const current = object.title.toLowerCase()
+                        const current = object?.title.toLowerCase()
                         const next = focusFrom ? from?.toLowerCase() : to?.toLowerCase()
                         return current.includes(next)
                     }).map((obj) => (
-                        <TouchableOpacity style={styles.button} onPress={() => focusTo ? setTo(obj.title) : setFrom(obj.title)}><Fontisto name='metro' style={{ marginHorizontal: 15 }} size={25} /><Text style={styles.toObj}>{obj.title}</Text></TouchableOpacity>
+                        <TouchableOpacity style={styles.button} onPress={() => focusTo ? setTo(obj.title) : setFrom(obj?.title)}><Fontisto name='metro' style={{ marginHorizontal: 15 }} size={25} /><Text style={styles.toObj}>{obj?.title}</Text></TouchableOpacity>
                     ))}
             </ScrollView>
         </SafeAreaView>

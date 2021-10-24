@@ -3,6 +3,8 @@ import { WebView } from 'react-native-webview'
 
 const SchemaScreen = ({ route }) => {
     const { to, from } = route?.params
+    console.log(to,'to')
+    console.log(from,'from')
     return (
         <WebView
             style={{
