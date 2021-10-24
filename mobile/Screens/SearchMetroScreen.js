@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { View, Text, Image, TextInput, StyleSheet } from 'react-native'
-import { Ionicons } from '@expo/vector-icons'
+import { View, Text, Image, TextInput, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
+import { Fontisto, Ionicons } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { ScrollView } from 'react-native-gesture-handler'
 
-const SearchMetroScreen = ({ route }) => {
-    const [from, setFrom] = useState(null)
-    const [to, setTo] = useState(null)
-    const [focus, setFocus] = useState(false)
+const SearchMetroScreen = ({ route, navigation }) => {
+    const [from, setFrom] = useState('')
+    const [to, setTo] = useState('')
+    const [focusFrom, setFocusFrom] = useState(false)
+    const [focusTo, setFocusTo] = useState(false)
 
     const { item, markers } = route?.params
 
@@ -36,18 +36,30 @@ const SearchMetroScreen = ({ route }) => {
         <SafeAreaView style={styles.container}>
             <ScrollView style={{ paddingHorizontal: 20 }}>
                 <View style={styles.searchInput}>
-                    <TextInput onFocus={() => setFocus(true)} onBlur={() => setFocus(false)} style={{ flex: 1 }} value={from} onChangeText={text => setFrom(text)} placeholder='Введите название станции метро' />
-                    <Ionicons name='search-sharp' style={{ marginHorizontal: 15 }} size={25} />
+                    <TextInput onFocus={() => setFocusFrom(true)} onBlur={() => setFocusFrom(false)} style={{ flex: 1 }} value={from} onChangeText={text => setFrom(text)} placeholder='Откуда ?' />
+                    <Ionicons name='locate-sharp' style={{ marginHorizontal: 15 }} size={25} />
                 </View>
                 <View style={styles.searchInput}>
-                    <TextInput onFocus={() => setFocus(true)} onBlur={() => setFocus(false)} style={{ flex: 1 }} value={to} onChangeText={text => setTo(text)} placeholder='Введите название станции метро' />
+                    <TextInput onFocus={() => setFocusTo(true)} onBlur={() => setFocusTo(false)} style={{ flex: 1 }} value={to} onChangeText={text => setTo(text)} placeholder='Куда ?' />
                     <Ionicons name='search-sharp' style={{ marginHorizontal: 15 }} size={25} />
                 </View>
-                {fromRoute && !focus ?
-                    <View style={{ flex: 1, width: "100%", alignItems: 'center', marginTop: 24 }}>
+                {fromRoute && !focusFrom && !focusTo ?
+                    <View style={{ flex: 1, width: "100%", marginTop: 24 }}>
                         <Image style={{ width: "100%", resizeMode: 'stretch' }} source={routeimg} />
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate('Schema', { from: fromRoute, to: toRoute })}
+                            style={styles.allServices}
+                        >
+                            <Text style={styles.buttonText}>Схема метро</Text>
+                        </TouchableOpacity>
                     </View> :
-                    <Text>List Search</Text>}
+                    markers?.filter((object) => {
+                        const current = object.title.toLowerCase()
+                        const next = focusFrom ? from?.toLowerCase() : to?.toLowerCase()
+                        return current.includes(next)
+                    }).map((obj) => (
+                        <TouchableOpacity style={styles.button} onPress={() => focusTo ? setTo(obj.title) : setFrom(obj.title)}><Fontisto name='metro' style={{ marginHorizontal: 15 }} size={25} /><Text style={styles.toObj}>{obj.title}</Text></TouchableOpacity>
+                    ))}
             </ScrollView>
         </SafeAreaView>
     )
@@ -72,6 +84,28 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: 20
+    },
+    allServices: {
+        marginTop: 16,
+        marginBottom: 15,
+        height: 55,
+        backgroundColor: '#FF0000',
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    buttonText: {
+        color: '#fff',
+        textTransform: 'uppercase',
+        fontWeight: '600',
+        fontSize: 14
+    },
+    toObj:{
+        fontSize: 20,
+    },
+    button:{
+        flexDirection:"row",
+        marginTop:24
     }
 })
 

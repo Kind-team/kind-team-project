@@ -7,6 +7,7 @@ import AllServices from './Screens/AllServices'
 import SearchMetroScreen from './Screens/SearchMetroScreen'
 import SearchTransportScreen from './Screens/SearchTransportScreen'
 import SearchParkingScreen from './Screens/SearchParkingScreen'
+import SchemaScreen from './Screens/SchemaScreen'
 
 const Stack = createNativeStackNavigator()
 
@@ -48,6 +49,13 @@ const Router = () => {
                      <Stack.Screen
                         name='SearchParking'
                         component={SearchParkingScreen}
+                        options={{
+                            headerShown: false
+                        }}
+                    />
+                    <Stack.Screen
+                        name='Schema'
+                        component={SchemaScreen}
                         options={{
                             headerShown: false
                         }}
