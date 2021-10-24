@@ -1,18 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { WebView } from 'react-native-webview'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const SchemaScreen = ({ route }) => {
     const { to, from } = route?.params
-    console.log(to,'to')
-    console.log(from,'from')
     return (
-        <WebView
-            style={{
-                flex: 1,
-                marginVertical:12
-            }}
-            source={{ uri: `https://yandex.ru/metro/moscow/${from?.id}/${to?.id}?route_from_id=${from?.id}&route_to_id=${to?.id}` }}
-        />
+        <SafeAreaView style={{ flex: 1 }}>
+            <WebView style={{ flex: 1 }}
+                source={{ uri: `https://yandex.ru/metro/moscow/${from?.id}/${to?.id}?route_from_id=${from?.id}&route_to_id=${to?.id}` }}
+            />
+        </SafeAreaView>
     )
 }
 
