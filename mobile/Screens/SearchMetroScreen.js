@@ -46,7 +46,7 @@ const SearchMetroScreen = ({ route, navigation }) => {
                 </View>
                 {fromRoute && !focusFrom && !focusTo ?
                     <View style={{ flex: 1, width: "100%", marginTop: 24 }}>
-                        <Image style={{ width: "100%", resizeMode: 'stretch' }} source={routeimg} />
+                        <Image style={{ width: "100%", height:700, resizeMode: 'cover' }} source={routeimg} />
                         <TouchableOpacity
                             onPress={() => navigation.navigate('Schema', { from: fromRoute, to: toRoute })}
                             style={styles.allServices}
