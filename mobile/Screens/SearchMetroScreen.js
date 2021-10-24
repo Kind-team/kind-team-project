@@ -40,7 +40,7 @@ const SearchMetroScreen = ({ route, navigation }) => {
                     <TextInput onFocus={() => setFocusFrom(true)} onBlur={() => setFocusFrom(false)} style={{ flex: 1 }} value={from} onChangeText={text => setFrom(text)} placeholder='Откуда ?' />
                     <Ionicons name='locate-sharp' style={{ marginHorizontal: 15 }} size={25} />
                 </View>
-                <View style={styles.searchInput}>
+                <View style={[styles.searchInput, { marginTop: 15 }]}>
                     <TextInput onFocus={() => setFocusTo(true)} onBlur={() => setFocusTo(false)} style={{ flex: 1 }} value={to} onChangeText={text => setTo(text)} placeholder='Куда ?' />
                     <Ionicons name='search-sharp' style={{ marginHorizontal: 15 }} size={25} />
                 </View>
@@ -55,7 +55,7 @@ const SearchMetroScreen = ({ route, navigation }) => {
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => navigation.navigate('Map', { from: fromRoute, to: toRoute })}
-                            style={styles.allServices}
+                            style={[styles.allServices, { marginTop: 0 }]}
                         >
                             <Text style={styles.buttonText}>В путь</Text>
                         </TouchableOpacity>
@@ -69,7 +69,7 @@ const SearchMetroScreen = ({ route, navigation }) => {
                             key={obj.id}
                             style={styles.button}
                             onPress={() => {
-                                if(focusTo) {
+                                if (focusTo) {
                                     setTo(obj?.title)
                                 } else {
                                     setFrom(obj?.title)
