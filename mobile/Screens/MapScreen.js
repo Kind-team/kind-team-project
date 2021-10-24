@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'rea
 import MapView, { Marker } from 'react-native-maps'
 import * as Location from 'expo-location';
 import MapViewDirections from 'react-native-maps-directions'
+import Meimg from '../assets/me.png'
+import Metroimg from '../assets/metro.png'
 const MapScreen = ({ route }) => {
     const [myPosition, setMyPosition] = useState(null)
     const [errorMsg, setErrorMsg] = useState(null);
@@ -41,12 +43,13 @@ const MapScreen = ({ route }) => {
             origin={{ latitude: fromlocation?.coordinate.latitude, longitude: fromlocation?.coordinate.longitude }}
             destination={{ latitude: myPosition?.coords.latitude, longitude: myPosition?.coords.longitude }}
             apikey={'AIzaSyC1rO31QNgNc8_Fruu6gui2QsH9qtEOBaI'}
-            strokeWidth={5}
+            strokeWidth={3}
             mode={"WALKING"}
             lineDashPattern={[1]}
             strokeColor={'red'}
         /> : null}
-        {myPosition ? <Marker coordinate={{ latitude: myPosition?.coords.latitude, longitude: myPosition?.coords.longitude }} /> : null}
+        {myPosition ? <Marker coordinate={{ latitude: myPosition?.coords.latitude, longitude: myPosition?.coords.longitude }}><Image style={{height:28, width:28}} source={Meimg} /></Marker> : null}
+        <Marker coordinate={{ latitude: fromlocation?.coordinate.latitude, longitude: fromlocation?.coordinate.longitude }}><Image style={{height:40, width:40}} source={Metroimg} /></Marker>
     </MapView>
     )
 }
