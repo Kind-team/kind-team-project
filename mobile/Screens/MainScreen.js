@@ -260,7 +260,7 @@ const MainScreen = (props) => {
                         <Text style={styles.buttonText}>Все сервисы</Text>
                     </TouchableOpacity>
                     {
-                        selectService !== 3 ? <TouchableOpacity onPress={() => props.navigation.navigate(serviceNavigate[selectService], { markers: markers, item: markers })} style={styles.searchInput}>
+                        selectService !== 3 ? <TouchableOpacity onPress={() => props.navigation.navigate(serviceNavigate[selectService], { markers: markers.filter(item => item.type === selectService), item: markers.filter(item => item.type === selectService) })} style={styles.searchInput}>
                             <Text style={{ flex: 1 }}>{servicePlaceholder[selectService]}</Text>
                             <Ionicons name='search-sharp' style={{ marginHorizontal: 15 }} size={25} />
                         </TouchableOpacity> : null
