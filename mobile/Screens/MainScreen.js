@@ -5,11 +5,8 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { WebView } from 'react-native-webview'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import MapView, { Marker } from 'react-native-maps'
-import * as Location from 'expo-location';
-import MapViewDirections from 'react-native-maps-directions'
+import * as Location from 'expo-location'
 import { Fontisto, MaterialCommunityIcons, FontAwesome5, Ionicons } from '@expo/vector-icons'
-import { useRoute } from '@react-navigation/native'
-
 import News from '../Components/News'
 import Weather from '../Components/Weather'
 
@@ -120,9 +117,14 @@ const MainScreen = (props) => {
                 style={styles.map}
             >
                 {markers?.filter((object) => object.type === selectService).map((item) => {
-                    return <TouchableOpacity key={item.id} activeOpacity={0.7} onPress={() => props.navigation.navigate('SearchMetro', { item, markers })} >
-                        <Marker coordinate={item.coordinate}><Image source={MetroImg} style={{ height: 50, width: 50 }} ></Image></Marker>
-                    </TouchableOpacity>
+                    return (
+                        <Marker
+                            key={item.id}
+                            onPress={() => props.navigation.navigate('SearchMetro', { item, markers })}
+                            coordinate={item.coordinate}>
+                            <Image source={MetroImg} style={{ height: 50, width: 50 }} />
+                        </Marker>
+                    )
                 })}
                 {myPosition ? <Marker coordinate={{ latitude: myPosition?.coords.latitude, longitude: myPosition?.coords.longitude }} /> : null}
             </MapView>

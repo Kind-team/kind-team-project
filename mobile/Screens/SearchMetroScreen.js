@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { View, Text, Image, TextInput, StyleSheet, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TextInput, StyleSheet, ScrollView, TouchableHighlight } from 'react-native'
 import { Fontisto, Ionicons } from '@expo/vector-icons'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const SearchMetroScreen = ({ route, navigation }) => {
     const [from, setFrom] = useState('')
@@ -64,7 +65,20 @@ const SearchMetroScreen = ({ route, navigation }) => {
                         const next = focusFrom ? from?.toLowerCase() : to?.toLowerCase()
                         return current.includes(next)
                     }).map((obj) => (
-                        <TouchableOpacity style={styles.button} onPress={() => focusTo ? setTo(obj.title) : setFrom(obj?.title)}><Fontisto name='metro' style={{ marginHorizontal: 15 }} size={25} /><Text style={styles.toObj}>{obj?.title}</Text></TouchableOpacity>
+                        <TouchableOpacity
+                            key={obj.id}
+                            style={styles.button}
+                            onPress={() => {
+                                if(focusTo) {
+                                    setTo(obj?.title)
+                                } else {
+                                    setFrom(obj?.title)
+                                }
+                            }}
+                        >
+                            <Fontisto name='metro' style={{ marginHorizontal: 15 }} size={25} />
+                            <Text style={styles.toObj}>{obj?.title}</Text>
+                        </TouchableOpacity>
                     ))}
             </ScrollView>
         </SafeAreaView>
@@ -106,12 +120,13 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         fontSize: 14
     },
-    toObj:{
+    toObj: {
         fontSize: 20,
     },
-    button:{
-        flexDirection:"row",
-        marginTop:24
+    button: {
+        flexDirection: "row",
+        marginTop: 24,
+        padding: 10
     }
 })
 
