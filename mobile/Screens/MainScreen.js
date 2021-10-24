@@ -249,6 +249,10 @@ const MainScreen = (props) => {
                             })
                         }
                     </ScrollView>
+                    <View style={{marginBottom: 15, flexDirection: 'row', justifyContent: 'space-between'}}>
+                        <Text style={styles.title}>Баллы</Text>
+                        <Text style={styles.title}>20₽</Text>
+                    </View>
                     <TouchableOpacity
                         onPress={() => props.navigation.navigate('AllServices')}
                         style={styles.allServices}
