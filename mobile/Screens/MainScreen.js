@@ -59,6 +59,60 @@ const markers = [
             longitude: 37.608602
         },
     },
+    {
+        id: '256776',
+        title: 'Лубянская площадь',
+        type: 1,
+        coordinate: {
+            latitude: 55.7581596,
+            longitude: 37.6224026
+        },
+    },
+    {
+        id: '2411422444',
+        title: 'Пушкинская пл.',
+        type: 1,
+        coordinate: {
+            latitude: 55.7657313,
+            longitude: 37.6035385
+        },
+    },
+    {
+        id: '2225555',
+        title: 'ст. м. Библиотека им. Ленина',
+        type: 1,
+        coordinate: {
+            latitude: 55.7522376,
+            longitude: 37.6082346
+        },
+    },
+    {
+        id: '125412512',
+        title: 'Никольская плаза',
+        type: 2,
+        coordinate: {
+            latitude: 55.7580223,
+            longitude: 37.6248115
+        },
+    },
+    {
+        id: '242124444',
+        title: 'Парковка на Пушкинской',
+        type: 2,
+        coordinate: {
+            latitude: 55.7649719,
+            longitude: 37.6044157
+        },
+    },
+    {
+        id: '24243444',
+        title: 'MCD Паркинг',
+        type: 2,
+        coordinate: {
+            latitude: 55.75197,
+            longitude: 37.6085694
+        },
+    },
 ]
 
 const serviceIcon = {
@@ -99,8 +153,8 @@ const MainScreen = (props) => {
 
             let location = await Location.getCurrentPositionAsync({});
             setMyPosition(location);
-        })();
-    }, []);
+        })()
+    }, [])
 
     return (
         <SafeAreaView style={styles.container}>
@@ -114,14 +168,37 @@ const MainScreen = (props) => {
                 style={styles.map}
             >
                 {markers?.filter((object) => object.type === selectService).map((item) => {
-                    return (
-                        <Marker
-                            key={item.id}
-                            onPress={() => props.navigation.navigate('SearchMetro', { item, markers })}
-                            coordinate={item.coordinate}>
-                            <Image source={MetroImg} style={{ height: 50, width: 50 }} />
-                        </Marker>
-                    )
+                    if (item.type === 0) {
+                        return (
+                            <Marker
+                                key={item.id}
+                                onPress={() => props.navigation.navigate('SearchMetro', { item, markers })}
+                                coordinate={item.coordinate}
+                            >
+                                <Image source={MetroImg} style={{ height: 50, width: 50 }} />
+                            </Marker>
+                        )
+                    } else if (item.type === 1) {
+                        return (
+                            <Marker
+                                key={item.id}
+                                // onPress={() => props.navigation.navigate('SearchMetro', { item, markers })}
+                                coordinate={item.coordinate}
+                            >
+                                {/* <Image source={MetroImg} style={{ height: 50, width: 50 }} /> */}
+                            </Marker>
+                        )
+                    } else if (item.type === 2) {
+                        return (
+                            <Marker
+                                key={item.id}
+                                // onPress={() => props.navigation.navigate('SearchMetro', { item, markers })}
+                                coordinate={item.coordinate}
+                            >
+                                {/* <Image source={MetroImg} style={{ height: 50, width: 50 }} /> */}
+                            </Marker>
+                        )
+                    }
                 })}
                 {myPosition ? <Marker coordinate={{ latitude: myPosition?.coords.latitude, longitude: myPosition?.coords.longitude }} /> : null}
             </MapView>

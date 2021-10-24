@@ -28,29 +28,29 @@ const MapScreen = ({ route }) => {
         setFromlocation(from)
     })
 
-    
+
     return (
         <MapView
-        initialRegion={{
-            latitude: 55.751244,
-            longitude: 37.618423,
-            latitudeDelta: 0.0422,
-            longitudeDelta: 0.0221,
-        }}
-        style={styles.map}
-    >
-        {fromlocation ? <MapViewDirections
-            origin={{ latitude: fromlocation?.coordinate.latitude, longitude: fromlocation?.coordinate.longitude }}
-            destination={{ latitude: myPosition?.coords.latitude, longitude: myPosition?.coords.longitude }}
-            apikey={'AIzaSyC1rO31QNgNc8_Fruu6gui2QsH9qtEOBaI'}
-            strokeWidth={3}
-            mode={"WALKING"}
-            lineDashPattern={[1]}
-            strokeColor={'red'}
-        /> : null}
-        {myPosition ? <Marker coordinate={{ latitude: myPosition?.coords.latitude, longitude: myPosition?.coords.longitude }}><Image style={{height:28, width:28}} source={Meimg} /></Marker> : null}
-        <Marker coordinate={{ latitude: fromlocation?.coordinate.latitude, longitude: fromlocation?.coordinate.longitude }}><Image style={{height:40, width:40}} source={Metroimg} /></Marker>
-    </MapView>
+            initialRegion={{
+                latitude: 55.751244,
+                longitude: 37.618423,
+                latitudeDelta: 0.0422,
+                longitudeDelta: 0.0221,
+            }}
+            style={styles.map}
+        >
+            {fromlocation ? <MapViewDirections
+                origin={{ latitude: fromlocation?.coordinate.latitude, longitude: fromlocation?.coordinate.longitude }}
+                destination={{ latitude: myPosition?.coords.latitude, longitude: myPosition?.coords.longitude }}
+                apikey={'AIzaSyC1rO31QNgNc8_Fruu6gui2QsH9qtEOBaI'}
+                strokeWidth={3}
+                mode={"WALKING"}
+                lineDashPattern={[1]}
+                strokeColor={'red'}
+            /> : null}
+            {myPosition ? <Marker coordinate={{ latitude: myPosition?.coords.latitude, longitude: myPosition?.coords.longitude }}><Image style={{ height: 28, width: 28 }} source={Meimg} /></Marker> : null}
+            <Marker coordinate={{ latitude: fromlocation?.coordinate.latitude, longitude: fromlocation?.coordinate.longitude }}><Image style={{ height: 40, width: 40 }} source={Metroimg} /></Marker>
+        </MapView>
     )
 }
 
