@@ -11,7 +11,6 @@ import News from '../Components/News'
 import Weather from '../Components/Weather'
 
 import MetroImg from '../assets/metro.png'
-import { interpolateNode } from 'react-native-reanimated'
 
 const services = [
     {
@@ -31,8 +30,6 @@ const services = [
         name: 'Схема метро'
     }
 ]
-
-//market, type
 
 const markers = [
     {
