@@ -195,7 +195,7 @@ const MainScreen = (props) => {
                         return (
                             <Marker
                                 key={item.id}
-                                // onPress={() => props.navigation.navigate('SearchMetro', { item, markers })}
+                                onPress={() => props.navigation.navigate('SearchParking', { item })}
                                 coordinate={item.coordinate}
                             >
                                 <Image source={ParkingImg} style={{ height: 23, width: 23 }} />
