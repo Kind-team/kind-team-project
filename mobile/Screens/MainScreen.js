@@ -175,10 +175,10 @@ const MainScreen = (props) => {
                         return (
                             <Marker
                                 key={item.id}
-                                onPress={() => props.navigation.navigate('SearchMetro', { item, markers })}
+                                onPress={() => props.navigation.navigate('SearchMetro', { item, markers: markers.filter(item => item.type === 0) })}
                                 coordinate={item.coordinate}
                             >
-                                <Image source={MetroImg} style={{ height: 50, width: 50 }} />
+                                <Image source={MetroImg} style={{ height: 23, width: 23 }} />
                             </Marker>
                         )
                     } else if (item.type === 1) {

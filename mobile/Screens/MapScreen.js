@@ -50,8 +50,8 @@ const MapScreen = ({ route }) => {
                 lineDashPattern={[1]}
                 strokeColor={'red'}
             /> : null}
-            {myPosition ? <Marker coordinate={{ latitude: myPosition?.coords.latitude, longitude: myPosition?.coords.longitude }}><Image style={{ height: 28, width: 28 }} source={Meimg} /></Marker> : null}
-            <Marker coordinate={{ latitude: fromlocation?.coordinate.latitude, longitude: fromlocation?.coordinate.longitude }}><Image style={{ height: 40, width: 40 }} source={Metroimg} /></Marker>
+            {myPosition ? <Marker coordinate={{ latitude: myPosition?.coords.latitude, longitude: myPosition?.coords.longitude }}><Image style={{ height: 25, width: 25 }} source={Meimg} /></Marker> : null}
+            <Marker coordinate={{ latitude: fromlocation?.coordinate.latitude, longitude: fromlocation?.coordinate.longitude }}><Image style={{ height: 25, width: 25 }} source={Metroimg} /></Marker>
         </MapView>
     )
 }
