@@ -43,6 +43,7 @@ const MapScreen = ({ route }) => {
             apikey={'AIzaSyC1rO31QNgNc8_Fruu6gui2QsH9qtEOBaI'}
             strokeWidth={5}
             mode={"WALKING"}
+            lineDashPattern={[1]}
             strokeColor={'red'}
         /> : null}
         {myPosition ? <Marker coordinate={{ latitude: myPosition?.coords.latitude, longitude: myPosition?.coords.longitude }} /> : null}
